@@ -1,29 +1,32 @@
 from yahoo_finance import Share
-import tkinter
+from tkinter import *
 import os
 import centerWindow
 
-
 def run(input1):
-
     ticker = Share(input1.get())
-    print(type(ticker))
-    loadAnalytics = tkinter.Tk()
-    loadAnalytics.title("$ + ticker +  Data")
+    loadAnalytics = Tk()
+    loadAnalytics.title("Stock Analytics")
     loadAnalytics.geometry("1080x720")
-
-    print ("Price per share: " + ticker.get_price())
+    centerWindow.center(loadAnalytics)
 
     ticker.refresh()
-    print ("Price per share: " + ticker.get_price())
 
-    print("The dividend yield is: " + ticker.get_dividend_yield())
+    if ticker.get_dividend_yield() is None:
+        ticker.get_dividend_yield == 0
 
-    print("The 52 week low is: " + ticker.get_year_low())
-    print("The 52 week high is: " + ticker.get_year_high())
-    print("The volume is: " + ticker.get_volume())
+    share_price    = Label(loadAnalytics, text = "Share Price: " + ticker.get_price()).pack()
+    prev_open      = Label(loadAnalytics, text = "Previous Open: " + ticker.get_open()).pack()
+    prev_close     = Label(loadAnalytics, text = "Previous CLose: " + ticker.get_prev_close()).pack()
+    #dividend_yield = Label(loadAnalytics, text = "Dividend Yield: " + ticker.get_dividend_yield()).pack()
+    year_low       = Label(loadAnalytics, text = "52 Week Low: " + ticker.get_year_low()).pack()
+    year_high      = Label(loadAnalytics, text = "52 Week High: " + ticker.get_year_high()).pack()
+    volume         = Label(loadAnalytics, text = "Volume: " + ticker.get_volume()).pack()
 
-    print("The previous close was: " + ticker.get_prev_close())
-    print("The previous open was: " + ticker.get_open())
+    previous_gain            = format(float(ticker.get_open()) - float(ticker.get_prev_close()), '.2f')
+    previous_gain_percentage = format((float((previous_gain))/float((ticker.get_prev_close())))*100, '.2f')
+
+    print ("$" + str(previous_gain))
+    print (str(previous_gain_percentage) + "%")
 
     loadAnalytics.mainloop()
