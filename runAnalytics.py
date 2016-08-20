@@ -12,8 +12,6 @@ def run(input1):
 
     ticker.refresh()
 
-    if ticker.get_dividend_yield() is None:
-        ticker.get_dividend_yield == 0
     share_price    = Label(loadAnalytics,text='Share Price: {}'.format(ticker.get_price())).pack()
     prev_open      = Label(loadAnalytics,text='Previous Open: {}'.format(ticker.get_open())).pack()
     prev_close     = Label(loadAnalytics,text='Previous CLose: {}'.format(ticker.get_prev_close())).pack()
@@ -25,7 +23,7 @@ def run(input1):
     previous_gain            = format(float(ticker.get_open()) - float(ticker.get_prev_close()), '.2f')
     previous_gain_percentage = format((float((previous_gain))/float((ticker.get_prev_close())))*100, '.2f')
 
-    print ("$" + str(previous_gain))
-    print (str(previous_gain_percentage) + "%")
+    output_gain            = Label(loadAnalytics,text='Previous Market Change: ${}'.format(str(previous_gain))).pack()
+    output_gain_percentage = Label(loadAnalytics,text='Previous Market Percentage Change: {}%'.format(str(previous_gain_percentage))).pack()
 
     loadAnalytics.mainloop()
