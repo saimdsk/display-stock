@@ -27,17 +27,26 @@ def run(input1):
     volume         = Label(loadAnalytics,text='Volume: {}'.format(ticker.get_volume())).pack()
     market_cap     = Label(loadAnalytics,text='Market Cap: {}'.format(ticker.get_market_cap())).pack()
 
-    #Custom functions which uses the yahoo-finance functions to create new ones
+    #Custom functions using the built in yahoo-finance functions as variables
+    #If an equation uses a dividend, put it inside the else statement, NOT HERE (Program will not execute)
     previous_gain            = format(float(ticker.get_price()) - float(ticker.get_open()), '.2f')
     previous_gain_percentage = format((float((previous_gain))/float((ticker.get_price())))*100, '.2f')
-    dividend_share           = format((float(ticker.get_price())*float(ticker.get_dividend_yield()))/100, '.2f')
     risk                     = format((float(ticker.get_price())-float(ticker.get_year_low()))/(float(ticker.get_year_high()))*100, '.2f')
 
-    #Creeats the widgets to output the results of the above functions
-    output_gain            = Label(loadAnalytics,text='Previous Market Change: ${}'.format(str(previous_gain))).pack()
-    output_gain_percentage = Label(loadAnalytics,text='Previous Market Percentage Change: {}%'.format(str(previous_gain_percentage))).pack()
-    dividend_per_share     = Label(loadAnalytics,text='Dividend Per Share: {}$'.format(str(dividend_share))).pack()
-    estimated_risk         = Label(loadAnalytics,text='Expected Risk at Current Price {}%'.format(str(risk))).pack()
+    #Solves the issue where if a stock has no dividend, the program would crash
+    #This work around makes it so different a output is used if no dividend is present
+    if ticker.get_dividend_yield() is None:
+        output_gain            = Label(loadAnalytics,text='Previous Market Change: ${}'.format(str(previous_gain))).pack()
+        output_gain_percentage = Label(loadAnalytics,text='Previous Market Percentage Change: {}%'.format(str(previous_gain_percentage))).pack()
+        estimated_risk         = Label(loadAnalytics,text='Expected Risk at Current Price {}%'.format(str(risk))).pack()
+    else:
+        #Creates the dividend_share equation if a dividend is available
+        dividend_share           = format((float(ticker.get_price())*float(ticker.get_dividend_yield()))/100, '.2f')
+
+        output_gain            = Label(loadAnalytics,text='Previous Market Change: ${}'.format(str(previous_gain))).pack()
+        output_gain_percentage = Label(loadAnalytics,text='Previous Market Percentage Change: {}%'.format(str(previous_gain_percentage))).pack()
+        dividend_per_share     = Label(loadAnalytics,text='Dividend Per Share: {}$'.format(str(dividend_share))).pack()
+        estimated_risk         = Label(loadAnalytics,text='Expected Risk at Current Price {}%'.format(str(risk))).pack()
 
     #Maiinloop for loadAnalytics, must keep all widgets within the mainloop
     loadAnalytics.mainloop()
