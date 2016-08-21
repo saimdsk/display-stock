@@ -1,6 +1,8 @@
 from tkinter import *
 import os
 
+#Function that cna be called to center applications
+#Make sure to use the application that you wish to center within the function
 def center(loadApplication):
     loadApplication.update_idletasks()
     width = loadApplication.winfo_width()
