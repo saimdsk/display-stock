@@ -24,4 +24,5 @@ input1.pack()
 loadAnalytics.pack()
 
 #Starts the main loop wich everything should be initialized before
+#Execution of tkinter application does not work after mainloop
 loadApplication.mainloop()
