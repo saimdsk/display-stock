@@ -6,7 +6,6 @@ import centerWindow
 #Creates the application and gives it a title and set dimensions
 loadApplication = Tk()
 loadApplication.title("Stock Analytics")
-loadApplication.geometry("1080x720")
 
 #Creates the label and input widget
 label1 = Label(loadApplication, text = "Ticker")
